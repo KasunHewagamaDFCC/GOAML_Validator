@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<report>
+<rentity_id>32</rentity_id><submission_code>E</submission_code><report_code>CTR</report_code><entity_reference>CTR091023</entity_reference><submission_date>2023-10-09T00:00:00</submission_date><currency_code_local>LKR</currency_code_local>
+  <transaction>
+    <transactionnumber>7454270923TT23270K1KS3</transactionnumber>
+    <transaction_location>JAFFNA</transaction_location>
+    <transaction_description>Cash Deposit - LCY</transaction_description>
+    <date_transaction>2023-09-27T00:00:00.0000000</date_transaction>
+    <value_date>2023-09-27T00:00:00.0000000</value_date>
+    <transmode_code>BRCH</transmode_code>
+    <amount_local>1211628.74</amount_local>
+      <t_from_my_client>
+        <from_funds_code>CASH</from_funds_code>
+        <from_person>
+          <first_name>Ka Gayantha</first_name>
+          <last_name>Hewagama</last_name>
+          <birthdate>1980-10-18T00:00:00.000000000</birthdate>
+          <ssn>802924321V</ssn>
+          <nationality1>LK</nationality1>
+          <residence>LK</residence>
+          <addresses>
+            <address>
+              <address_type>PERM</address_type>
+              <address>KALIMANI LANE KADDAPIRAI JAFFNA</address>
+              <city>JAFFNA</city>
+              <country_code>LK</country_code>
+            </address>
+          </addresses>
+          <occupation>Employed</occupation>
+        </from_person>
+        <from_country>LK</from_country>
+      </t_from_my_client>
+      <t_to_my_client>
+        <to_funds_code>ELEC</to_funds_code>
+        <to_account>
+          <institution_name>DFCC BANK PLC</institution_name>
+          <swift>DFCCLKLX</swift> 
+          <branch>JAFFNA</branch>
+          <account>042TKT12M11538</account>
+          <currency_code>LKR</currency_code>
+          <personal_account_type>PAWN</personal_account_type>
+          <signatory>
+            <is_primary>true</is_primary>
+            <t_person>
+              <first_name>TEST</first_name>
+              <last_name>KUMANAN</last_name>
+              <birthdate>1980-10-18T00:00:00.000000000</birthdate>
+              <ssn>802924321V</ssn>
+              <nationality1>LK</nationality1>
+              <residence>LK</residence>
+              <addresses>
+                <address>
+                  <address_type>PERM</address_type>
+                  <address>KALIMANI LANE KADDAPIRAI JAFFNA</address>
+                  <city>JAFFNA</city>
+                  <country_code>LK</country_code>
+                </address>
+              </addresses>
+              <occupation>Employed</occupation>
+            </t_person>
+            <role>ACHLD</role>
+          </signatory>
+          <status_code>ACTV</status_code>
+        </to_account>
+        <to_country>LK</to_country>
+      </t_to_my_client> 
+  </transaction>
+<report_indicators><indicator>CTR</indicator></report_indicators></report>

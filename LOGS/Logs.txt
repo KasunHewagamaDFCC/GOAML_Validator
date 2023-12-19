@@ -1,0 +1,5 @@
+Error: Line 592, Column 69 - cvc-pattern-valid: Value 'Manuf Machinery  Equipment N.E.C.' is not facet-valid with respect to pattern '[A-Za-z0-9 ,-]+' for type '#AnonType_businesst_entity_my_client'.
+Error: Line 592, Column 69 - cvc-type.3.1.3: The value 'Manuf Machinery  Equipment N.E.C.' of element 'business' is not valid.
+Error: Line 23489, Column 29 - cvc-pattern-valid: Value '.' is not facet-valid with respect to pattern '[0-9]{9}[VX]|[0-9]{12}' for type '#AnonType_ssnt_person'.
+Error: Line 23489, Column 29 - cvc-type.3.1.3: The value '.' of element 'ssn' is not valid.
+XML is not valid. Validation errors:

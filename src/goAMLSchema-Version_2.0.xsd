@@ -1,0 +1,4066 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" id="report">
+  <xs:element name="report">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="rentity_id">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:minInclusive value="1" />
+              <xs:pattern value="[0-9]{1,3}">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en"> Only digits[0-9] are accepted. Range is 1-999 </xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="rentity_branch">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="0" />
+              <xs:maxLength value="255" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="submission_code" type="submission_type" />
+        <xs:element name="report_code" type="report_type" />
+        <xs:element minOccurs="0" name="entity_reference" nillable="true">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="255" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="fiu_ref_number" nillable="true">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="255" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="submission_date" type="sql_date" />
+        <xs:element name="currency_code_local" type="currency_type" />
+        <xs:element minOccurs="0" name="reporting_person" type="t_person_registration_in_report" />
+        <xs:element minOccurs="0" name="location" type="t_address" />
+        <xs:element minOccurs="0" name="reason">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="4000" />
+              <xs:pattern value="[ -~\s]*">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en"> Only ASCII characters are accepted.</xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="action">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="4000" />
+              <xs:pattern value="[ -~\s]*">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en"> Only ASCII characters are accepted.</xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:choice>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element name="transaction">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="transactionnumber">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                        <xs:minLength value="1" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element minOccurs="0" name="internal_ref_number">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:minLength value="1" />
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element minOccurs="0" name="transaction_location">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:minLength value="0" />
+                        <xs:maxLength value="255" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="transaction_description">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="4000" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="date_transaction" type="sql_date" />
+                  <xs:element minOccurs="0" maxOccurs="0" name="teller" nillable="true">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element minOccurs="0" maxOccurs="0" name="authorized" nillable="true">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:sequence minOccurs="0" maxOccurs="0">
+                    <xs:element minOccurs="0" name="late_deposit">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:boolean" />
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="date_posting" type="sql_date" />
+                  </xs:sequence>
+                  <xs:element minOccurs="0" name="value_date" type="sql_date" />
+                  <xs:element name="transmode_code" type="conduction_type" />
+                  <xs:element minOccurs="0" name="transmode_comment" nillable="true">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="50" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="amount_local">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:decimal">
+                        <xs:minInclusive value="0" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:choice>
+                    <xs:element name="involved_parties">
+                      <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                          <xs:element name="party" type="t_party" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:sequence>
+                      <xs:choice>
+                        <xs:element name="t_from_my_client">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="from_funds_code" type="funds_type" />
+                              <xs:element minOccurs="0" name="from_funds_comment">
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:string">
+                                    <xs:maxLength value="255" />
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:element>
+                              <xs:element minOccurs="0" name="from_foreign_currency" type="t_foreign_currency" />
+                              <xs:element minOccurs="0" name="t_conductor" type="t_person_my_client" />
+                              <xs:choice>
+                                <xs:element name="from_account" type="t_account_my_client" />
+                                <xs:element name="from_person" type="t_person_my_client" />
+                                <xs:element name="from_entity" type="t_entity_my_client" />
+                              </xs:choice>
+                              <xs:element name="from_country" type="country_type" />
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="t_from">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="from_funds_code" type="funds_type" />
+                              <xs:element minOccurs="0" name="from_funds_comment">
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:string">
+                                    <xs:maxLength value="255" />
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:element>
+                              <xs:element minOccurs="0" name="from_foreign_currency" type="t_foreign_currency" />
+                              <xs:element minOccurs="0" name="t_conductor" type="t_person" />
+                              <xs:choice>
+                                <xs:element name="from_account" type="t_account" />
+                                <xs:element name="from_person" type="t_person" />
+                                <xs:element name="from_entity" type="t_entity" />
+                              </xs:choice>
+                              <xs:element name="from_country" type="country_type" />
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:choice>
+                      <xs:choice>
+                        <xs:element name="t_to_my_client">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="to_funds_code" type="funds_type" />
+                              <xs:element minOccurs="0" name="to_funds_comment">
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:string">
+                                    <xs:maxLength value="255" />
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:element>
+                              <xs:element minOccurs="0" name="to_foreign_currency" type="t_foreign_currency" />
+                              <xs:choice>
+                                <xs:element name="to_account" type="t_account_my_client" />
+                                <xs:element name="to_person" type="t_person_my_client" />
+                                <xs:element name="to_entity" type="t_entity_my_client" />
+                              </xs:choice>
+                              <xs:element name="to_country" type="country_type" />
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="t_to">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="to_funds_code" type="funds_type" />
+                              <xs:element minOccurs="0" name="to_funds_comment">
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:string">
+                                    <xs:maxLength value="255" />
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:element>
+                              <xs:element minOccurs="0" name="to_foreign_currency" type="t_foreign_currency" />
+                              <xs:choice>
+                                <xs:element name="to_account" type="t_account" />
+                                <xs:element name="to_person" type="t_person" />
+                                <xs:element name="to_entity" type="t_entity" />
+                              </xs:choice>
+                              <xs:element name="to_country" type="country_type" />
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:choice>
+                    </xs:sequence>
+                  </xs:choice>
+                  <xs:element minOccurs="0" name="goods_services">
+                    <xs:complexType>
+                      <xs:sequence maxOccurs="unbounded">
+                        <xs:element name="item" type="t_trans_item" />
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element minOccurs="0" name="comments">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:minLength value="0" />
+                        <xs:maxLength value="4000" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:element name="activity">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="report_parties">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="unbounded">
+                      <xs:element name="report_party" type="report_party_type" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="goods_services">
+                  <xs:complexType>
+                    <xs:sequence maxOccurs="unbounded">
+                      <xs:element name="item" type="t_trans_item" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+        <xs:element name="report_indicators">
+          <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+              <xs:element name="indicator" type="report_indicator_type" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="t_account_my_client">
+    <xs:sequence>
+      <xs:element name="institution_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+            <xs:pattern value="[ \t\n&amp;'\\-`,\\/:.;,_~A-Za-z0-9()-]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"> accepted characters are (space/tab/new line), A-Z, a-z, 0-9, ampersand,(apostrophe), ., -,(, ), `, \, /, :, ;, ,(comma), _, ~, @, $. Must have characters are A-Z, a-z (letters)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:choice>
+        <xs:element minOccurs="0" maxOccurs="0" name="institution_code" nillable="true">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1" />
+              <xs:maxLength value="50" />
+              <xs:pattern value="[0-9]+">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en"> Accepted values are digits and minimum value is 1 </xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="swift">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="11" />
+              <xs:minLength value="4" />
+              <xs:pattern value="[A-Z]{4}LK[A-Z0-9]{2}([A-Z0-9]{3})?|[0-9]{4}">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en"> SWIFT code format and at minimum 8 chars and maximum 11 OR LankaClear code (4 digits) OR LankaFIN code (4 digits, add prededing zeros to match 4 digits if LankaFIN code is just 2 digits)</xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:choice>
+      <xs:element minOccurs="0" name="non_bank_institution" type="xs:boolean" />
+      <xs:element name="branch">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="3" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="account">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="3" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="currency_code" type="currency_type" />
+      <xs:element minOccurs="0" name="account_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="iban">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="34" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="client_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="personal_account_type" type="account_type" />
+      <xs:element minOccurs="0" name="t_entity" type="t_entity_my_client" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="signatory">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" fixed="1" name="is_primary">
+              <xs:simpleType>
+                <xs:restriction base="xs:boolean" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="t_person" type="t_person_my_client" />
+            <xs:element name="role" type="account_person_role_type" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="opened" type="sql_date" />
+      <xs:element minOccurs="0" name="closed" type="sql_date" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" name="balance" type="xs:decimal" />
+        <xs:element minOccurs="0" name="date_balance" type="sql_date" />
+      </xs:sequence>
+      <xs:element name="status_code" type="account_status_type" />
+      <xs:element minOccurs="0" name="beneficiary" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="beneficiary_comment" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_account">
+    <xs:sequence>
+      <xs:element name="institution_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+            <xs:pattern value="[ \t\n&amp;'\\-`,\\/:.;,_~A-Za-z0-9()-]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"> accepted characters are (space/tab/new line), A-Z, a-z, 0-9, ampersand,(apostrophe), ., -,(, ), `, \, /, :, ;, ,(comma), _, ~, @, $. Must have characters are A-Z, a-z (letters)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:choice>
+        <xs:element minOccurs="0" maxOccurs="0" name="institution_code" nillable="true">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1" />
+              <xs:maxLength value="50" />
+              <xs:pattern value="[0-9]+">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en"> Accepted values are digits and minimum value is 1 </xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="swift">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="11" />
+              <xs:minLength value="4" />
+              <xs:pattern value="[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?|[0-9]{4}">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">SWIFT code format and at minimum 8 chars and maximum 11 OR LankaClear code (4 digits) OR LankaFIN code (4 digits, add prededing zeros to match 4 digits if LankaFIN code is just 2 digits)</xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:choice>
+      <xs:element minOccurs="0" name="non_bank_institution" type="xs:boolean" />
+      <xs:element minOccurs="0" name="branch">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="account">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="3" />
+            <xs:pattern value="[A-Za-z0-9\\|_/\\-]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"> account number may contain any of A-Z(uppercase), a-z(lowercase), 0-9, \, /, |, _, -. Must contain any of A-Z(uppercase), a-z(lowercase), 0-9</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="currency_code" type="currency_type" />
+      <xs:element minOccurs="0" name="account_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="iban">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="34" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="client_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="personal_account_type" type="account_type" />
+      <xs:element minOccurs="0" name="t_entity" type="t_entity" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="signatory">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" fixed="1" name="is_primary">
+              <xs:simpleType>
+                <xs:restriction base="xs:boolean" />
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="t_person" type="t_person" />
+            <xs:element minOccurs="0" name="role" type="account_person_role_type" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="opened" type="sql_date" />
+      <xs:element minOccurs="0" name="closed" type="sql_date" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" name="balance" type="xs:decimal" />
+        <xs:element minOccurs="0" name="date_balance" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="status_code" type="account_status_type" />
+      <xs:element minOccurs="0" name="beneficiary" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="beneficiary_comment" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+            <xs:pattern value="[ -~\s]*">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"> only ASCII characters are allowed</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_entity_my_client">
+    <xs:sequence>
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="2" />
+            <xs:pattern value="([\sA-Za-z0-9&amp;'\.\-\(\)`\\/:;,_~@]{2,})(.*[A-Za-z]+).*">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are (space/tab/new line), A-Z(uppercase), a-z(lowercase), 0-9, ampersand,(apostrophe), ., -,(, ), `, \, /, :, ;, ,(comma), _, ~, @, $. Must have characters are A-Z, a-z (letters)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="commercial_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="incorporation_legal_form" type="legal_form_type" />
+      <xs:element minOccurs="0" name="incorporation_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="3" />
+<!--             <xs:pattern value="^[A-Z0-9()\-./\\]*[A-Z0-9][A-Z0-9()\-./\\]*$"> -->
+            <xs:pattern value="[ '\\-`,\\/:;,A-Z0-9 ()-.]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are A-Z(uppercase), 0-9, (, ), -, ., /, \. Must have characters are any of A-Z(uppercase), 0-9</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="business">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+<!--             <xs:pattern value="^[ -~]*[A-Z]+[ -~]*[a-z]+[ -~]*$">^[A-Za-z0-9]+$ -->
+            <xs:pattern value="[A-Za-z0-9 ,-]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any ASCII characters. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="email" type="email_address" />
+      <xs:element minOccurs="0" name="url" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="incorporation_country_code" type="country_type" />
+      <xs:element maxOccurs="unbounded" name="director_id">
+        <xs:complexType>
+          <xs:complexContent mixed="false">
+            <xs:extension base="t_person">
+              <xs:sequence>
+                <xs:element name="role" type="entity_person_role_type" />
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_date" type="sql_date" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="business_closed">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_business_closed" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_entity">
+    <xs:sequence>
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="2" />
+            <xs:pattern value="([\sA-Za-z0-9&amp;'\.\-\(\)`\\/:;,_~@]{2,})(.*[A-Za-z]+).*">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are (space/tab/new line), A-Z(uppercase), a-z(lowercase), 0-9, ampersand,(apostrophe), ., -,(, ), `, \, /, :, ;, ,(comma), _, ~, @, $. Must have characters are A-Z, a-z (letters)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="commercial_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_legal_form" type="legal_form_type" />
+      <xs:element minOccurs="0" name="incorporation_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="3" />
+<!--             <xs:pattern value="^[A-Z0-9()\-./\\]*[A-Z0-9][A-Z0-9()\-./\\]*$"> -->
+            <xs:pattern value="[ '\\-`,\\/:;,A-Z0-9 ()-.]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are A-Z(uppercase), 0-9, (, ), -, ., /, \. Must have characters are any of A-Z(uppercase), 0-9</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="business">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="email" type="email_address" />
+      <xs:element minOccurs="0" name="url" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_country_code" type="country_type" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="director_id">
+        <xs:complexType>
+          <xs:complexContent mixed="false">
+            <xs:extension base="t_person">
+              <xs:sequence minOccurs="0">
+                <xs:element name="role" type="entity_person_role_type" />
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_date" type="sql_date" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="business_closed">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_business_closed" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_person_my_client">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="gender" type="gender_type" />
+      <xs:element minOccurs="0" name="title" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="first_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+            <xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="middle_name" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="prefix">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+            <xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"> accepted characters are any of  (space), .(period), A-Z(uppercase), a-z(lowercase), (, ). Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="last_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+            <xs:pattern value="([A-Za-z])+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="birthdate" type="sql_date" />
+      <xs:element minOccurs="0" name="birth_place">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="mothers_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="alias">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ssn">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="10" />
+            <xs:maxLength value="25" />
+            <xs:pattern value="[0-9]{9}[VX]|[0-9]{12}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">old NIC format 9 [0-9](digits) followed by V or X OR new NIC format 12 [0-9](digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" name="passport_number">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4" />
+              <xs:maxLength value="255" />
+              <xs:pattern value="[A-Za-z0-9]{4,}">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">accepted characters are any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="passport_country" type="country_type" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="id_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+            <xs:pattern value="^[A-Za-z0-9]{3,}$">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="nationality1" type="country_type" />
+      <xs:element minOccurs="0" name="nationality2" type="country_type" />
+      <xs:element minOccurs="0" name="nationality3" type="country_type" />
+      <xs:element name="residence" type="country_type" />
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="5" name="email" nillable="true" type="email_address" />
+      <xs:element name="occupation">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="3" />
+            <xs:pattern value="[-A-Za-z /,]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">only ASCII characters and must have any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="employer_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="employer_address_id" type="t_address" />
+      <xs:element minOccurs="0" name="employer_phone_id" type="t_phone" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="identification" type="t_person_identification" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="deceased">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_deceased" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="source_of_wealth">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_person">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="gender" type="gender_type" />
+      <xs:element minOccurs="0" name="title" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="first_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+            <xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="middle_name" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="prefix">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+            <xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of  (space), .(period), A-Z(uppercase), a-z(lowercase), (, ). Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="last_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+            <xs:pattern value="([A-Za-z])+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="birthdate" type="sql_date" />
+      <xs:element minOccurs="0" name="birth_place">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="mothers_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="alias">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ssn">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="10" />
+            <xs:maxLength value="25" />
+            <xs:pattern value="[0-9]{9}[VX]|[0-9]{12}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">old NIC format 9 [0-9](digits) followed by V or X OR new NIC format 12 [0-9](digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" name="passport_number">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4" />
+              <xs:maxLength value="255" />
+              <xs:pattern value="[A-Za-z0-9]{4,}">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">accepted characters are any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+                </xs:annotation>
+              </xs:pattern>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="passport_country" type="country_type" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="id_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+            <xs:pattern value="^[A-Za-z0-9]{3,}$">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="nationality1" type="country_type" />
+      <xs:element minOccurs="0" name="nationality2" type="country_type" />
+      <xs:element minOccurs="0" name="nationality3" type="country_type" />
+      <xs:element minOccurs="0" name="residence" type="country_type" />
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="5" name="email" nillable="true" type="email_address" />
+      <xs:element minOccurs="0" name="occupation">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="employer_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="employer_address_id" type="t_address" />
+      <xs:element minOccurs="0" name="employer_phone_id" type="t_phone" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="identification" type="t_person_identification" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="deceased">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_deceased" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="source_of_wealth">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_person_identification">
+    <xs:sequence>
+      <xs:element name="type" type="identifier_type" />
+      <xs:element name="number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+            <xs:pattern value="^[a-zA-Z0-9]+$">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">must have any of a-z(lowercase), A-Z(uppercase), 0-9(digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="issue_date" type="sql_date" />
+      <xs:element minOccurs="0" name="expiry_date" type="sql_date" />
+      <xs:element minOccurs="0" name="issued_by">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="issue_country" type="country_type" />
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_foreign_currency">
+    <xs:sequence>
+      <xs:element name="foreign_currency_code" type="currency_type" />
+      <xs:element name="foreign_amount">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="foreign_exchange_rate">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_address">
+    <xs:sequence>
+      <xs:element name="address_type" type="contact_type" />
+      <xs:element name="address">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="8" />
+            <xs:pattern value="([\sA-Za-z0-9&quot;#&amp;'\(\),\-\.\\/:;@_`]{8,})(.*[A-Za-z0-9 ]+).*">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accept any of (space, tab, new line), A-Z(uppercase), a-z(lowercase), 0-9, (quotation), ampersand, apostrophe, (, ), ,(comma), -, .(period), \, /, :, ;, @, _, `and must have any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="town">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:pattern value="($|(^[\sA-Za-z0-9&quot;#&amp;'\(\),\-\.\\/:;@_`]{2,})(.*[A-Za-z0-9]+).*)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accept any of (space, tab, new line), A-Z(uppercase), a-z(lowercase), 0-9, (quotation), ampersand, apostrophe, (, ), ,(comma), -, .(period), \, /, :, ;, @, _, `and must have any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="city">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="2" />
+            <xs:pattern value="(([\sA-Za-z\-]{2,})(.*[A-Za-z]+).*)">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accept any of (space, tab, new line), A-Z(uppercase), a-z(lowercase), - and must have any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="zip">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="10" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="country_code" type="country_type" />
+      <xs:element minOccurs="0" name="state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_phone">
+    <xs:sequence>
+      <xs:element name="tph_contact_type" type="contact_type" />
+      <xs:element name="tph_communication_type" type="communication_type" />
+      <xs:element minOccurs="0" name="tph_country_prefix">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="4" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="tph_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tph_extension">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="10" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_party">
+    <xs:sequence>
+      <xs:element name="role" type="party_role_type" />
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="person" type="t_person" />
+          <xs:element name="person_my_client" type="t_person_my_client" />
+          <xs:element name="account" type="t_account" />
+          <xs:element name="account_my_client" type="t_account_my_client" />
+          <xs:element name="entity" type="t_entity" />
+          <xs:element name="entity_my_client" type="t_entity_my_client" />
+        </xs:choice>
+      </xs:sequence>
+      <xs:element name="funds_code" type="funds_type" />
+      <xs:element minOccurs="0" name="funds_comment">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="foreign_currency" type="t_foreign_currency" />
+      <xs:element name="country" type="country_type" />
+      <xs:element minOccurs="0" name="significance">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="report_party_type">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="person" type="t_person" />
+        <xs:element name="account" type="t_account" />
+        <xs:element name="entity" type="t_entity" />
+      </xs:choice>
+      <xs:element minOccurs="0" name="significance">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reason">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_trans_item">
+    <xs:sequence>
+      <xs:element name="item_type" type="trans_item_type" />
+      <xs:element minOccurs="0" name="item_make">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="description">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="previously_registered_to">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="500" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="presently_registered_to">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="500" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="estimated_value" type="xs:decimal" />
+      <xs:element minOccurs="0" name="status_code" type="trans_item_status" />
+      <xs:element minOccurs="0" name="status_comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="500" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="disposed_value" type="xs:decimal" />
+      <xs:element minOccurs="0" name="currency_code" type="currency_type" />
+      <xs:element minOccurs="0" name="size" type="xs:decimal" />
+      <xs:element minOccurs="0" name="size_uom">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="250" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="address" type="t_address" />
+      <xs:element minOccurs="0" name="registration_date" type="sql_date" />
+      <xs:element minOccurs="0" name="registration_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="500" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="identification_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="submission_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="E" />
+      <xs:enumeration value="M" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rentity_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RE" />
+      <xs:enumeration value="SH" />
+      <xs:enumeration value="FIU" />
+      <xs:enumeration value="SUP" />
+      <xs:enumeration value="IND" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="report_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AIFA" />
+      <xs:enumeration value="AIFT" />
+      <xs:enumeration value="CFIR" />
+      <xs:enumeration value="CTR" />
+      <xs:enumeration value="EFT" />
+      <xs:enumeration value="IFT" />
+      <xs:enumeration value="IRD" />
+      <xs:enumeration value="LSTRT" />
+      <xs:enumeration value="STR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="funds_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="BDRF" />
+      <xs:enumeration value="BGUR" />
+      <xs:enumeration value="BKCG" />
+      <xs:enumeration value="CASH" />
+      <xs:enumeration value="CDEB" />
+      <xs:enumeration value="CHEQ" />
+      <xs:enumeration value="CRDT" />
+      <xs:enumeration value="ELEC" />
+      <xs:enumeration value="FCTR" />
+      <xs:enumeration value="GVSE" />
+      <xs:enumeration value="INBL" />
+      <xs:enumeration value="INTS" />
+      <xs:enumeration value="LOAN" />
+      <xs:enumeration value="LOCR" />
+      <xs:enumeration value="LSNG" />
+      <xs:enumeration value="MOBL" />
+      <xs:enumeration value="MRGN" />
+      <xs:enumeration value="NA" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="OUBL" />
+      <xs:enumeration value="PROM" />
+      <xs:enumeration value="PWNG" />
+      <xs:enumeration value="SHAR" />
+      <xs:enumeration value="STOC" />
+      <xs:enumeration value="TAX" />
+      <xs:enumeration value="TCHQ" />
+      <xs:enumeration value="VRTL" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="account_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="CODP" />
+      <xs:enumeration value="CRCD" />
+      <xs:enumeration value="CRNT" />
+      <xs:enumeration value="DEBT" />
+      <xs:enumeration value="DIGW" />
+      <xs:enumeration value="ELCW" />
+      <xs:enumeration value="EQTY" />
+      <xs:enumeration value="FCTR" />
+      <xs:enumeration value="INPG" />
+      <xs:enumeration value="INPL" />
+      <xs:enumeration value="INVS" />
+      <xs:enumeration value="LEAS" />
+      <xs:enumeration value="LOAN" />
+      <xs:enumeration value="MGTD" />
+      <xs:enumeration value="MINR" />
+      <xs:enumeration value="MOBW" />
+      <xs:enumeration value="MORT" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="PAWN" />
+      <xs:enumeration value="SAVG" />
+      <xs:enumeration value="SDBX" />
+      <xs:enumeration value="TRDG" />
+      <xs:enumeration value="TRDP" />
+      <xs:enumeration value="TRST" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="account_status_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="ACTV" />
+      <xs:enumeration value="CLBC" />
+      <xs:enumeration value="CLRE" />
+      <xs:enumeration value="CLSD" />
+      <xs:enumeration value="DRMT" />
+      <xs:enumeration value="FRZN" />
+      <xs:enumeration value="INAC" />
+      <xs:enumeration value="OTH" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="identifier_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="BCER" />
+      <xs:enumeration value="DL" />
+      <xs:enumeration value="NIC" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="PID" />
+      <xs:enumeration value="PPT" />
+      <xs:enumeration value="TID" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="conduction_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="AGNT" />
+      <xs:enumeration value="ATM" />
+      <xs:enumeration value="BKOF" />
+      <xs:enumeration value="BRCH" />
+      <xs:enumeration value="EMAL" />
+      <xs:enumeration value="INTR" />
+      <xs:enumeration value="IPG" />
+      <xs:enumeration value="LETR" />
+      <xs:enumeration value="MBWL" />
+      <xs:enumeration value="MOAP" />
+      <xs:enumeration value="NA" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="POS" />
+      <xs:enumeration value="SMS" />
+      <xs:enumeration value="STOR" />
+      <xs:enumeration value="TLBN" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="currency_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACU" />
+      <xs:enumeration value="AED" />
+      <xs:enumeration value="AFN" />
+      <xs:enumeration value="ALL" />
+      <xs:enumeration value="AMD" />
+      <xs:enumeration value="ANG" />
+      <xs:enumeration value="AOA" />
+      <xs:enumeration value="ARS" />
+      <xs:enumeration value="AUD" />
+      <xs:enumeration value="AWG" />
+      <xs:enumeration value="AZN" />
+      <xs:enumeration value="BAM" />
+      <xs:enumeration value="BBD" />
+      <xs:enumeration value="BDT" />
+      <xs:enumeration value="BGN" />
+      <xs:enumeration value="BHD" />
+      <xs:enumeration value="BIF" />
+      <xs:enumeration value="BMD" />
+      <xs:enumeration value="BND" />
+      <xs:enumeration value="BOB" />
+      <xs:enumeration value="BOV" />
+      <xs:enumeration value="BRL" />
+      <xs:enumeration value="BSD" />
+      <xs:enumeration value="BTN" />
+      <xs:enumeration value="BWP" />
+      <xs:enumeration value="BYN" />
+      <xs:enumeration value="BZD" />
+      <xs:enumeration value="CAD" />
+      <xs:enumeration value="CDF" />
+      <xs:enumeration value="CHE" />
+      <xs:enumeration value="CHF" />
+      <xs:enumeration value="CHW" />
+      <xs:enumeration value="CLF" />
+      <xs:enumeration value="CLP" />
+      <xs:enumeration value="CNH" />
+      <xs:enumeration value="CNY" />
+      <xs:enumeration value="COP" />
+      <xs:enumeration value="COU" />
+      <xs:enumeration value="CRC" />
+      <xs:enumeration value="CUC" />
+      <xs:enumeration value="CUP" />
+      <xs:enumeration value="CVE" />
+      <xs:enumeration value="CZK" />
+      <xs:enumeration value="DJF" />
+      <xs:enumeration value="DKK" />
+      <xs:enumeration value="DOP" />
+      <xs:enumeration value="DZD" />
+      <xs:enumeration value="EGP" />
+      <xs:enumeration value="ERN" />
+      <xs:enumeration value="ETB" />
+      <xs:enumeration value="EUR" />
+      <xs:enumeration value="FJD" />
+      <xs:enumeration value="FKP" />
+      <xs:enumeration value="GBP" />
+      <xs:enumeration value="GEL" />
+      <xs:enumeration value="GHS" />
+      <xs:enumeration value="GIP" />
+      <xs:enumeration value="GMD" />
+      <xs:enumeration value="GNF" />
+      <xs:enumeration value="GTQ" />
+      <xs:enumeration value="GYD" />
+      <xs:enumeration value="HKD" />
+      <xs:enumeration value="HNL" />
+      <xs:enumeration value="HRK" />
+      <xs:enumeration value="HTG" />
+      <xs:enumeration value="HUF" />
+      <xs:enumeration value="IDR" />
+      <xs:enumeration value="ILS" />
+      <xs:enumeration value="INR" />
+      <xs:enumeration value="IQD" />
+      <xs:enumeration value="IRR" />
+      <xs:enumeration value="ISK" />
+      <xs:enumeration value="JMD" />
+      <xs:enumeration value="JOD" />
+      <xs:enumeration value="JPY" />
+      <xs:enumeration value="KES" />
+      <xs:enumeration value="KGS" />
+      <xs:enumeration value="KHR" />
+      <xs:enumeration value="KMF" />
+      <xs:enumeration value="KPW" />
+      <xs:enumeration value="KRW" />
+      <xs:enumeration value="KWD" />
+      <xs:enumeration value="KYD" />
+      <xs:enumeration value="KZT" />
+      <xs:enumeration value="LAK" />
+      <xs:enumeration value="LBP" />
+      <xs:enumeration value="LKR" />
+      <xs:enumeration value="LRD" />
+      <xs:enumeration value="LSL" />
+      <xs:enumeration value="LYD" />
+      <xs:enumeration value="MAD" />
+      <xs:enumeration value="MDL" />
+      <xs:enumeration value="MGA" />
+      <xs:enumeration value="MKD" />
+      <xs:enumeration value="MMK" />
+      <xs:enumeration value="MNT" />
+      <xs:enumeration value="MOP" />
+      <xs:enumeration value="MRU" />
+      <xs:enumeration value="MUR" />
+      <xs:enumeration value="MVR" />
+      <xs:enumeration value="MWK" />
+      <xs:enumeration value="MXN" />
+      <xs:enumeration value="MXV" />
+      <xs:enumeration value="MYR" />
+      <xs:enumeration value="MZN" />
+      <xs:enumeration value="NAD" />
+      <xs:enumeration value="NGN" />
+      <xs:enumeration value="NIO" />
+      <xs:enumeration value="NOK" />
+      <xs:enumeration value="NPR" />
+      <xs:enumeration value="NZD" />
+      <xs:enumeration value="OMR" />
+      <xs:enumeration value="PAB" />
+      <xs:enumeration value="PEN" />
+      <xs:enumeration value="PGK" />
+      <xs:enumeration value="PHP" />
+      <xs:enumeration value="PKR" />
+      <xs:enumeration value="PLN" />
+      <xs:enumeration value="PYG" />
+      <xs:enumeration value="QAR" />
+      <xs:enumeration value="RON" />
+      <xs:enumeration value="RSD" />
+      <xs:enumeration value="RUB" />
+      <xs:enumeration value="RWF" />
+      <xs:enumeration value="SAR" />
+      <xs:enumeration value="SBD" />
+      <xs:enumeration value="SCR" />
+      <xs:enumeration value="SDG" />
+      <xs:enumeration value="SEK" />
+      <xs:enumeration value="SGD" />
+      <xs:enumeration value="SHP" />
+      <xs:enumeration value="SLL" />
+      <xs:enumeration value="SOS" />
+      <xs:enumeration value="SRD" />
+      <xs:enumeration value="SSP" />
+      <xs:enumeration value="STN" />
+      <xs:enumeration value="SVC" />
+      <xs:enumeration value="SYP" />
+      <xs:enumeration value="SZL" />
+      <xs:enumeration value="THB" />
+      <xs:enumeration value="TJS" />
+      <xs:enumeration value="TMT" />
+      <xs:enumeration value="TND" />
+      <xs:enumeration value="TOP" />
+      <xs:enumeration value="TRY" />
+      <xs:enumeration value="TTD" />
+      <xs:enumeration value="TWD" />
+      <xs:enumeration value="TZS" />
+      <xs:enumeration value="UAH" />
+      <xs:enumeration value="UGX" />
+      <xs:enumeration value="USD" />
+      <xs:enumeration value="USN" />
+      <xs:enumeration value="UYI" />
+      <xs:enumeration value="UYU" />
+      <xs:enumeration value="UYW" />
+      <xs:enumeration value="UZS" />
+      <xs:enumeration value="VES" />
+      <xs:enumeration value="VND" />
+      <xs:enumeration value="VUV" />
+      <xs:enumeration value="WST" />
+      <xs:enumeration value="XAB" />
+      <xs:enumeration value="XAF" />
+      <xs:enumeration value="XAG" />
+      <xs:enumeration value="XAU" />
+      <xs:enumeration value="XBA" />
+      <xs:enumeration value="XBB" />
+      <xs:enumeration value="XBC" />
+      <xs:enumeration value="XBD" />
+      <xs:enumeration value="XBS" />
+      <xs:enumeration value="XBT" />
+      <xs:enumeration value="XCD" />
+      <xs:enumeration value="XDH" />
+      <xs:enumeration value="XDR" />
+      <xs:enumeration value="XEC" />
+      <xs:enumeration value="XES" />
+      <xs:enumeration value="XET" />
+      <xs:enumeration value="XIT" />
+      <xs:enumeration value="XLM" />
+      <xs:enumeration value="XLN" />
+      <xs:enumeration value="XMR" />
+      <xs:enumeration value="XNO" />
+      <xs:enumeration value="XOF" />
+      <xs:enumeration value="XOM" />
+      <xs:enumeration value="XPD" />
+      <xs:enumeration value="XPF" />
+      <xs:enumeration value="XPT" />
+      <xs:enumeration value="XRP" />
+      <xs:enumeration value="XSA" />
+      <xs:enumeration value="XSU" />
+      <xs:enumeration value="XTC" />
+      <xs:enumeration value="XTG" />
+      <xs:enumeration value="XTP" />
+      <xs:enumeration value="XTS" />
+      <xs:enumeration value="XUA" />
+      <xs:enumeration value="XXX" />
+      <xs:enumeration value="XZC" />
+      <xs:enumeration value="YER" />
+      <xs:enumeration value="ZAR" />
+      <xs:enumeration value="ZMW" />
+      <xs:enumeration value="ZWL" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="country_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-">
+        <!--UNKNOWN-->
+      </xs:enumeration>
+      <xs:enumeration value="AC">
+        <!--Ascension Island-->
+      </xs:enumeration>
+      <xs:enumeration value="AD">
+        <!--ANDORRA-->
+      </xs:enumeration>
+      <xs:enumeration value="AE">
+        <!--UNITED ARAB EMIRATES-->
+      </xs:enumeration>
+      <xs:enumeration value="AF">
+        <!--AFGHANISTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="AG">
+        <!--ANTIGUA AND BARBUDA-->
+      </xs:enumeration>
+      <xs:enumeration value="AI">
+        <!--ANGUILLA-->
+      </xs:enumeration>
+      <xs:enumeration value="AL">
+        <!--ALBANIA-->
+      </xs:enumeration>
+      <xs:enumeration value="AM">
+        <!--ARMENIA-->
+      </xs:enumeration>
+      <xs:enumeration value="AN">
+        <!--NETHERLANDS ANTILLES-->
+      </xs:enumeration>
+      <xs:enumeration value="AO">
+        <!--ANGOLA-->
+      </xs:enumeration>
+      <xs:enumeration value="AP">
+        <!--African Regional Industrial Property Organization-->
+      </xs:enumeration>
+      <xs:enumeration value="AQ">
+        <!--ANTARCTICA_ENG-->
+      </xs:enumeration>
+      <xs:enumeration value="AR">
+        <!--ARGENTINA-->
+      </xs:enumeration>
+      <xs:enumeration value="AS">
+        <!--AMERICAN SAMOA-->
+      </xs:enumeration>
+      <xs:enumeration value="AT">
+        <!--AUSTRIA-->
+      </xs:enumeration>
+      <xs:enumeration value="AU">
+        <!--AUSTRALIA-->
+      </xs:enumeration>
+      <xs:enumeration value="AW">
+        <!--ARUBA-->
+      </xs:enumeration>
+      <xs:enumeration value="AX">
+        <!--ÅLAND ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="AZ">
+        <!--AZERBAIJAN-->
+      </xs:enumeration>
+      <xs:enumeration value="BA">
+        <!--BOSNIA AND HERZEGOVINA-->
+      </xs:enumeration>
+      <xs:enumeration value="BB">
+        <!--BARBADOS-->
+      </xs:enumeration>
+      <xs:enumeration value="BD">
+        <!--BANGLADESH-->
+      </xs:enumeration>
+      <xs:enumeration value="BE">
+        <!--BELGIUM-->
+      </xs:enumeration>
+      <xs:enumeration value="BF">
+        <!--BURKINA FASO-->
+      </xs:enumeration>
+      <xs:enumeration value="BG">
+        <!--BULGARIA-->
+      </xs:enumeration>
+      <xs:enumeration value="BH">
+        <!--BAHRAIN-->
+      </xs:enumeration>
+      <xs:enumeration value="BI">
+        <!--BURUNDI-->
+      </xs:enumeration>
+      <xs:enumeration value="BJ">
+        <!--BENIN-->
+      </xs:enumeration>
+      <xs:enumeration value="BL">
+        <!--SAINT BARTHÉLEMY-->
+      </xs:enumeration>
+      <xs:enumeration value="BM">
+        <!--BERMUDA-->
+      </xs:enumeration>
+      <xs:enumeration value="BN">
+        <!--BRUNEI DARUSSALAM-->
+      </xs:enumeration>
+      <xs:enumeration value="BO">
+        <!--BOLIVIA-->
+      </xs:enumeration>
+      <xs:enumeration value="BQ">
+        <!--Bonaire,  Saint Eustatius and Saba-->
+      </xs:enumeration>
+      <xs:enumeration value="BR">
+        <!--BRAZIL-->
+      </xs:enumeration>
+      <xs:enumeration value="BS">
+        <!--BAHAMAS-->
+      </xs:enumeration>
+      <xs:enumeration value="BT">
+        <!--BHUTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="BU">
+        <!--Burma-->
+      </xs:enumeration>
+      <xs:enumeration value="BV">
+        <!--BOUVET ISLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="BW">
+        <!--BOTSWANA-->
+      </xs:enumeration>
+      <xs:enumeration value="BX">
+        <!--Benelux Trademarks and Designs Office-->
+      </xs:enumeration>
+      <xs:enumeration value="BY">
+        <!--BELARUS-->
+      </xs:enumeration>
+      <xs:enumeration value="BZ">
+        <!--BELIZE-->
+      </xs:enumeration>
+      <xs:enumeration value="CA">
+        <!--CANADA-->
+      </xs:enumeration>
+      <xs:enumeration value="CC">
+        <!--COCOS (KEELING) ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="CD">
+        <!--CONGO, THE DEMOCRATIC REPUBLIC OF THE-->
+      </xs:enumeration>
+      <xs:enumeration value="CF">
+        <!--CENTRAL AFRICAN REPUBLIC-->
+      </xs:enumeration>
+      <xs:enumeration value="CG">
+        <!--CONGO-->
+      </xs:enumeration>
+      <xs:enumeration value="CH">
+        <!--SWITZERLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="CI">
+        <!--COTE D'IVOIRE-->
+      </xs:enumeration>
+      <xs:enumeration value="CK">
+        <!--COOK ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="CL">
+        <!--CHILE-->
+      </xs:enumeration>
+      <xs:enumeration value="CM">
+        <!--CAMEROON-->
+      </xs:enumeration>
+      <xs:enumeration value="CN">
+        <!--CHINA-->
+      </xs:enumeration>
+      <xs:enumeration value="CO">
+        <!--COLOMBIA-->
+      </xs:enumeration>
+      <xs:enumeration value="CP">
+        <!--Clipperton Island-->
+      </xs:enumeration>
+      <xs:enumeration value="CR">
+        <!--COSTA RICA-->
+      </xs:enumeration>
+      <xs:enumeration value="CS">
+        <!--SERBIA AND MONTENEGRO-->
+      </xs:enumeration>
+      <xs:enumeration value="CU">
+        <!--CUBA-->
+      </xs:enumeration>
+      <xs:enumeration value="CV">
+        <!--CAPE VERDE-->
+      </xs:enumeration>
+      <xs:enumeration value="CW">
+        <!--Curaçao-->
+      </xs:enumeration>
+      <xs:enumeration value="CX">
+        <!--CHRISTMAS ISLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="CY">
+        <!--CYPRUS-->
+      </xs:enumeration>
+      <xs:enumeration value="CZ">
+        <!--CZECH REPUBLIC-->
+      </xs:enumeration>
+      <xs:enumeration value="DE">
+        <!--GERMANY-->
+      </xs:enumeration>
+      <xs:enumeration value="DG">
+        <!--Diego Garcia-->
+      </xs:enumeration>
+      <xs:enumeration value="DJ">
+        <!--DJIBOUTI-->
+      </xs:enumeration>
+      <xs:enumeration value="DK">
+        <!--DENMARK-->
+      </xs:enumeration>
+      <xs:enumeration value="DM">
+        <!--DOMINICA-->
+      </xs:enumeration>
+      <xs:enumeration value="DO">
+        <!--DOMINICAN REPUBLIC-->
+      </xs:enumeration>
+      <xs:enumeration value="DY">
+        <!--BENIN-->
+      </xs:enumeration>
+      <xs:enumeration value="DZ">
+        <!--ALGERIA-->
+      </xs:enumeration>
+      <xs:enumeration value="EA">
+        <!--Ceuta, Melilla-->
+      </xs:enumeration>
+      <xs:enumeration value="EC">
+        <!--ECUADOR-->
+      </xs:enumeration>
+      <xs:enumeration value="EE">
+        <!--ESTONIA-->
+      </xs:enumeration>
+      <xs:enumeration value="EF">
+        <!--Union of Countries under the European Community Patent Convention-->
+      </xs:enumeration>
+      <xs:enumeration value="EG">
+        <!--EGYPT-->
+      </xs:enumeration>
+      <xs:enumeration value="EH">
+        <!--WESTERN SAHARA-->
+      </xs:enumeration>
+      <xs:enumeration value="EM">
+        <!--European Trademark Office-->
+      </xs:enumeration>
+      <xs:enumeration value="EP">
+        <!--European Patent Organization-->
+      </xs:enumeration>
+      <xs:enumeration value="ER">
+        <!--ERITREA-->
+      </xs:enumeration>
+      <xs:enumeration value="ES">
+        <!--SPAIN-->
+      </xs:enumeration>
+      <xs:enumeration value="ET">
+        <!--ETHIOPIA-->
+      </xs:enumeration>
+      <xs:enumeration value="EU">
+        <!--European Union-->
+      </xs:enumeration>
+      <xs:enumeration value="EV">
+        <!--Eurasian Patent Organization-->
+      </xs:enumeration>
+      <xs:enumeration value="EW">
+        <!--ESTONIA-->
+      </xs:enumeration>
+      <xs:enumeration value="FI">
+        <!--FINLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="FJ">
+        <!--FIJI-->
+      </xs:enumeration>
+      <xs:enumeration value="FK">
+        <!--FALKLAND ISLANDS (MALVINAS)-->
+      </xs:enumeration>
+      <xs:enumeration value="FL">
+        <!--Liechtenstein-->
+      </xs:enumeration>
+      <xs:enumeration value="FM">
+        <!--MICRONESIA, FEDERATED STATES OF-->
+      </xs:enumeration>
+      <xs:enumeration value="FO">
+        <!--FAROE ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="FR">
+        <!--FRANCE-->
+      </xs:enumeration>
+      <xs:enumeration value="FX">
+        <!--France, Metropolitan-->
+      </xs:enumeration>
+      <xs:enumeration value="GA">
+        <!--GABON-->
+      </xs:enumeration>
+      <xs:enumeration value="GB">
+        <!--UNITED KINGDOM-->
+      </xs:enumeration>
+      <xs:enumeration value="GC">
+        <!--Patent Office of the Cooperation Council for the Arab States of the Gulf (GCC)-->
+      </xs:enumeration>
+      <xs:enumeration value="GD">
+        <!--GRENADA-->
+      </xs:enumeration>
+      <xs:enumeration value="GE">
+        <!--GEORGIA-->
+      </xs:enumeration>
+      <xs:enumeration value="GF">
+        <!--FRENCH GUIANA-->
+      </xs:enumeration>
+      <xs:enumeration value="GG">
+        <!--GUERNSEY-->
+      </xs:enumeration>
+      <xs:enumeration value="GH">
+        <!--GHANA-->
+      </xs:enumeration>
+      <xs:enumeration value="GI">
+        <!--GIBRALTAR-->
+      </xs:enumeration>
+      <xs:enumeration value="GL">
+        <!--GREENLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="GM">
+        <!--GAMBIA-->
+      </xs:enumeration>
+      <xs:enumeration value="GN">
+        <!--GUINEA-->
+      </xs:enumeration>
+      <xs:enumeration value="GP">
+        <!--GUADELOUPE-->
+      </xs:enumeration>
+      <xs:enumeration value="GQ">
+        <!--EQUATORIAL GUINEA-->
+      </xs:enumeration>
+      <xs:enumeration value="GR">
+        <!--GREECE-->
+      </xs:enumeration>
+      <xs:enumeration value="GS">
+        <!--SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="GT">
+        <!--GUATEMALA-->
+      </xs:enumeration>
+      <xs:enumeration value="GU">
+        <!--GUAM-->
+      </xs:enumeration>
+      <xs:enumeration value="GW">
+        <!--GUINEA-BISSAU-->
+      </xs:enumeration>
+      <xs:enumeration value="GY">
+        <!--GUYANA-->
+      </xs:enumeration>
+      <xs:enumeration value="HK">
+        <!--HONG KONG-->
+      </xs:enumeration>
+      <xs:enumeration value="HM">
+        <!--HEARD ISLAND AND MCDONALD ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="HN">
+        <!--HONDURAS-->
+      </xs:enumeration>
+      <xs:enumeration value="HR">
+        <!--CROATIA-->
+      </xs:enumeration>
+      <xs:enumeration value="HT">
+        <!--HAITI-->
+      </xs:enumeration>
+      <xs:enumeration value="HU">
+        <!--HUNGARY-->
+      </xs:enumeration>
+      <xs:enumeration value="IB">
+        <!--International Bureau of WIPO-->
+      </xs:enumeration>
+      <xs:enumeration value="IC">
+        <!--Canary Islands-->
+      </xs:enumeration>
+      <xs:enumeration value="ID">
+        <!--INDONESIA-->
+      </xs:enumeration>
+      <xs:enumeration value="IE">
+        <!--IRELAND-->
+      </xs:enumeration>
+      <xs:enumeration value="IL">
+        <!--ISRAEL-->
+      </xs:enumeration>
+      <xs:enumeration value="IM">
+        <!--ISLE OF MAN-->
+      </xs:enumeration>
+      <xs:enumeration value="IN">
+        <!--INDIA-->
+      </xs:enumeration>
+      <xs:enumeration value="IO">
+        <!--BRITISH INDIAN OCEAN TERRITORY-->
+      </xs:enumeration>
+      <xs:enumeration value="IQ">
+        <!--IRAQ-->
+      </xs:enumeration>
+      <xs:enumeration value="IR">
+        <!--IRAN, ISLAMIC REPUBLIC OF-->
+      </xs:enumeration>
+      <xs:enumeration value="IS">
+        <!--ICELAND-->
+      </xs:enumeration>
+      <xs:enumeration value="IT">
+        <!--ITALY-->
+      </xs:enumeration>
+      <xs:enumeration value="JA">
+        <!--Jamaica-->
+      </xs:enumeration>
+      <xs:enumeration value="JE">
+        <!--JERSEY-->
+      </xs:enumeration>
+      <xs:enumeration value="JM">
+        <!--JAMAICA-->
+      </xs:enumeration>
+      <xs:enumeration value="JO">
+        <!--JORDAN-->
+      </xs:enumeration>
+      <xs:enumeration value="JP">
+        <!--JAPAN-->
+      </xs:enumeration>
+      <xs:enumeration value="KE">
+        <!--KENYA-->
+      </xs:enumeration>
+      <xs:enumeration value="KG">
+        <!--KYRGYZSTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="KH">
+        <!--CAMBODIA-->
+      </xs:enumeration>
+      <xs:enumeration value="KI">
+        <!--KIRIBATI-->
+      </xs:enumeration>
+      <xs:enumeration value="KM">
+        <!--COMOROS-->
+      </xs:enumeration>
+      <xs:enumeration value="KN">
+        <!--SAINT KITTS AND NEVIS-->
+      </xs:enumeration>
+      <xs:enumeration value="KP">
+        <!--KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF-->
+      </xs:enumeration>
+      <xs:enumeration value="KR">
+        <!--KOREA, REPUBLIC OF-->
+      </xs:enumeration>
+      <xs:enumeration value="KS">
+        <!--KOSOVO (Old - KS)-->
+      </xs:enumeration>
+      <xs:enumeration value="KW">
+        <!--KUWAIT-->
+      </xs:enumeration>
+      <xs:enumeration value="KY">
+        <!--CAYMAN ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="KZ">
+        <!--KAZAKHSTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="LA">
+        <!--LAO PEOPLE'S DEMOCRATIC REPUBLIC-->
+      </xs:enumeration>
+      <xs:enumeration value="LB">
+        <!--LEBANON-->
+      </xs:enumeration>
+      <xs:enumeration value="LC">
+        <!--SAINT LUCIA-->
+      </xs:enumeration>
+      <xs:enumeration value="LF">
+        <!--Libya Fezzan-->
+      </xs:enumeration>
+      <xs:enumeration value="LI">
+        <!--LIECHTENSTEIN-->
+      </xs:enumeration>
+      <xs:enumeration value="LK">
+        <!--SRI LANKA-->
+      </xs:enumeration>
+      <xs:enumeration value="LR">
+        <!--LIBERIA-->
+      </xs:enumeration>
+      <xs:enumeration value="LS">
+        <!--LESOTHO-->
+      </xs:enumeration>
+      <xs:enumeration value="LT">
+        <!--LITHUANIA-->
+      </xs:enumeration>
+      <xs:enumeration value="LU">
+        <!--LUXEMBOURG-->
+      </xs:enumeration>
+      <xs:enumeration value="LV">
+        <!--LATVIA-->
+      </xs:enumeration>
+      <xs:enumeration value="LY">
+        <!--LIBYAN ARAB JAMAHIRIYA-->
+      </xs:enumeration>
+      <xs:enumeration value="MA">
+        <!--MOROCCO-->
+      </xs:enumeration>
+      <xs:enumeration value="MC">
+        <!--MONACO-->
+      </xs:enumeration>
+      <xs:enumeration value="MD">
+        <!--MOLDOVA, REPUBLIC OF-->
+      </xs:enumeration>
+      <xs:enumeration value="ME">
+        <!--Montenegro-->
+      </xs:enumeration>
+      <xs:enumeration value="MF">
+        <!--SAINT MARTIN (FRENCH PART)-->
+      </xs:enumeration>
+      <xs:enumeration value="MG">
+        <!--MADAGASCAR-->
+      </xs:enumeration>
+      <xs:enumeration value="MH">
+        <!--MARSHALL ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="MK">
+        <!--MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF-->
+      </xs:enumeration>
+      <xs:enumeration value="ML">
+        <!--MALI-->
+      </xs:enumeration>
+      <xs:enumeration value="MM">
+        <!--MYANMAR-->
+      </xs:enumeration>
+      <xs:enumeration value="MN">
+        <!--MONGOLIA-->
+      </xs:enumeration>
+      <xs:enumeration value="MO">
+        <!--MACAO-->
+      </xs:enumeration>
+      <xs:enumeration value="MP">
+        <!--NORTHERN MARIANA ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="MQ">
+        <!--MARTINIQUE-->
+      </xs:enumeration>
+      <xs:enumeration value="MR">
+        <!--MAURITANIA-->
+      </xs:enumeration>
+      <xs:enumeration value="MS">
+        <!--MONTSERRAT-->
+      </xs:enumeration>
+      <xs:enumeration value="MT">
+        <!--MALTA-->
+      </xs:enumeration>
+      <xs:enumeration value="MU">
+        <!--MAURITIUS-->
+      </xs:enumeration>
+      <xs:enumeration value="MV">
+        <!--MALDIVES-->
+      </xs:enumeration>
+      <xs:enumeration value="MW">
+        <!--MALAWI-->
+      </xs:enumeration>
+      <xs:enumeration value="MX">
+        <!--MEXICO-->
+      </xs:enumeration>
+      <xs:enumeration value="MY">
+        <!--MALAYSIA-->
+      </xs:enumeration>
+      <xs:enumeration value="MZ">
+        <!--MOZAMBIQUE-->
+      </xs:enumeration>
+      <xs:enumeration value="NA">
+        <!--NAMIBIA-->
+      </xs:enumeration>
+      <xs:enumeration value="NC">
+        <!--NEW CALEDONIA-->
+      </xs:enumeration>
+      <xs:enumeration value="NE">
+        <!--NIGER-->
+      </xs:enumeration>
+      <xs:enumeration value="NF">
+        <!--NORFOLK ISLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="NG">
+        <!--NIGERIA-->
+      </xs:enumeration>
+      <xs:enumeration value="NI">
+        <!--NICARAGUA-->
+      </xs:enumeration>
+      <xs:enumeration value="NL">
+        <!--NETHERLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="NO">
+        <!--NORWAY-->
+      </xs:enumeration>
+      <xs:enumeration value="NP">
+        <!--NEPAL-->
+      </xs:enumeration>
+      <xs:enumeration value="NR">
+        <!--NAURU-->
+      </xs:enumeration>
+      <xs:enumeration value="NT">
+        <!--Neutral Zone-->
+      </xs:enumeration>
+      <xs:enumeration value="NU">
+        <!--NIUE-->
+      </xs:enumeration>
+      <xs:enumeration value="NZ">
+        <!--NEW ZEALAND-->
+      </xs:enumeration>
+      <xs:enumeration value="OA">
+        <!--African Intellectual Property Organization-->
+      </xs:enumeration>
+      <xs:enumeration value="OM">
+        <!--OMAN-->
+      </xs:enumeration>
+      <xs:enumeration value="PA">
+        <!--PANAMA-->
+      </xs:enumeration>
+      <xs:enumeration value="PE">
+        <!--PERU-->
+      </xs:enumeration>
+      <xs:enumeration value="PF">
+        <!--FRENCH POLYNESIA-->
+      </xs:enumeration>
+      <xs:enumeration value="PG">
+        <!--PAPUA NEW GUINEA-->
+      </xs:enumeration>
+      <xs:enumeration value="PH">
+        <!--PHILIPPINES-->
+      </xs:enumeration>
+      <xs:enumeration value="PI">
+        <!--PHILIPPINES-->
+      </xs:enumeration>
+      <xs:enumeration value="PK">
+        <!--PAKISTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="PL">
+        <!--POLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="PM">
+        <!--SAINT PIERRE AND MIQUELON-->
+      </xs:enumeration>
+      <xs:enumeration value="PN">
+        <!--PITCAIRN-->
+      </xs:enumeration>
+      <xs:enumeration value="PR">
+        <!--PUERTO RICO-->
+      </xs:enumeration>
+      <xs:enumeration value="PS">
+        <!--PALESTINIAN TERRITORY, OCCUPIED-->
+      </xs:enumeration>
+      <xs:enumeration value="PT">
+        <!--PORTUGAL-->
+      </xs:enumeration>
+      <xs:enumeration value="PW">
+        <!--PALAU-->
+      </xs:enumeration>
+      <xs:enumeration value="PY">
+        <!--PARAGUAY-->
+      </xs:enumeration>
+      <xs:enumeration value="QA">
+        <!--QATAR-->
+      </xs:enumeration>
+      <xs:enumeration value="RA">
+        <!--ARGENTINA-->
+      </xs:enumeration>
+      <xs:enumeration value="RB">
+        <!--Bolivia [cf. Botswana: identical code element]-->
+      </xs:enumeration>
+      <xs:enumeration value="RC">
+        <!--CHINA-->
+      </xs:enumeration>
+      <xs:enumeration value="RE">
+        <!--REUNION-->
+      </xs:enumeration>
+      <xs:enumeration value="RH">
+        <!--HAITI-->
+      </xs:enumeration>
+      <xs:enumeration value="RI">
+        <!--INDONESIA-->
+      </xs:enumeration>
+      <xs:enumeration value="RL">
+        <!--LEBANON-->
+      </xs:enumeration>
+      <xs:enumeration value="RM">
+        <!--MADAGASCAR-->
+      </xs:enumeration>
+      <xs:enumeration value="RN">
+        <!--NIGER-->
+      </xs:enumeration>
+      <xs:enumeration value="RO">
+        <!--ROMANIA-->
+      </xs:enumeration>
+      <xs:enumeration value="RP">
+        <!--PHILIPPINES-->
+      </xs:enumeration>
+      <xs:enumeration value="RS">
+        <!--Serbia-->
+      </xs:enumeration>
+      <xs:enumeration value="RU">
+        <!--RUSSIAN FEDERATION-->
+      </xs:enumeration>
+      <xs:enumeration value="RW">
+        <!--RWANDA-->
+      </xs:enumeration>
+      <xs:enumeration value="SA">
+        <!--SAUDI ARABIA-->
+      </xs:enumeration>
+      <xs:enumeration value="SB">
+        <!--SOLOMON ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="SC">
+        <!--SEYCHELLES-->
+      </xs:enumeration>
+      <xs:enumeration value="SD">
+        <!--SUDAN-->
+      </xs:enumeration>
+      <xs:enumeration value="SE">
+        <!--SWEDEN-->
+      </xs:enumeration>
+      <xs:enumeration value="SF">
+        <!--FINLAND-->
+      </xs:enumeration>
+      <xs:enumeration value="SG">
+        <!--SINGAPORE-->
+      </xs:enumeration>
+      <xs:enumeration value="SH">
+        <!--SAINT HELENA-->
+      </xs:enumeration>
+      <xs:enumeration value="SI">
+        <!--SLOVENIA-->
+      </xs:enumeration>
+      <xs:enumeration value="SJ">
+        <!--SVALBARD AND JAN MAYEN-->
+      </xs:enumeration>
+      <xs:enumeration value="SK">
+        <!--SLOVAKIA-->
+      </xs:enumeration>
+      <xs:enumeration value="SL">
+        <!--SIERRA LEONE-->
+      </xs:enumeration>
+      <xs:enumeration value="SM">
+        <!--SAN MARINO-->
+      </xs:enumeration>
+      <xs:enumeration value="SN">
+        <!--SENEGAL-->
+      </xs:enumeration>
+      <xs:enumeration value="SO">
+        <!--SOMALIA-->
+      </xs:enumeration>
+      <xs:enumeration value="SR">
+        <!--SURINAME-->
+      </xs:enumeration>
+      <xs:enumeration value="SS">
+        <!--South Sudan-->
+      </xs:enumeration>
+      <xs:enumeration value="ST">
+        <!--SAO TOME AND PRINCIPE-->
+      </xs:enumeration>
+      <xs:enumeration value="SU">
+        <!--USSR-->
+      </xs:enumeration>
+      <xs:enumeration value="SV">
+        <!--EL SALVADOR-->
+      </xs:enumeration>
+      <xs:enumeration value="SX">
+        <!--Sint  Maarten (Dutch part)-->
+      </xs:enumeration>
+      <xs:enumeration value="SY">
+        <!--SYRIAN ARAB REPUBLIC-->
+      </xs:enumeration>
+      <xs:enumeration value="SZ">
+        <!--SWAZILAND-->
+      </xs:enumeration>
+      <xs:enumeration value="TA">
+        <!--Tristan da Cunha-->
+      </xs:enumeration>
+      <xs:enumeration value="TC">
+        <!--TURKS AND CAICOS ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="TD">
+        <!--CHAD-->
+      </xs:enumeration>
+      <xs:enumeration value="TF">
+        <!--FRENCH SOUTHERN TERRITORIES-->
+      </xs:enumeration>
+      <xs:enumeration value="TG">
+        <!--TOGO-->
+      </xs:enumeration>
+      <xs:enumeration value="TH">
+        <!--THAILAND-->
+      </xs:enumeration>
+      <xs:enumeration value="TJ">
+        <!--TAJIKISTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="TK">
+        <!--TOKELAU-->
+      </xs:enumeration>
+      <xs:enumeration value="TL">
+        <!--TIMOR-LESTE-->
+      </xs:enumeration>
+      <xs:enumeration value="TM">
+        <!--TURKMENISTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="TN">
+        <!--TUNISIA-->
+      </xs:enumeration>
+      <xs:enumeration value="TO">
+        <!--TONGA-->
+      </xs:enumeration>
+      <xs:enumeration value="TP">
+        <!--East Timor-->
+      </xs:enumeration>
+      <xs:enumeration value="TR">
+        <!--TURKEY-->
+      </xs:enumeration>
+      <xs:enumeration value="TT">
+        <!--TRINIDAD AND TOBAGO-->
+      </xs:enumeration>
+      <xs:enumeration value="TV">
+        <!--TUVALU-->
+      </xs:enumeration>
+      <xs:enumeration value="TW">
+        <!--TAIWAN, PROVINCE OF CHINA-->
+      </xs:enumeration>
+      <xs:enumeration value="TZ">
+        <!--TANZANIA, UNITED REPUBLIC OF-->
+      </xs:enumeration>
+      <xs:enumeration value="UA">
+        <!--UKRAINE-->
+      </xs:enumeration>
+      <xs:enumeration value="UG">
+        <!--UGANDA-->
+      </xs:enumeration>
+      <xs:enumeration value="UK">
+        <!--UNITED KINGDOM-->
+      </xs:enumeration>
+      <xs:enumeration value="UM">
+        <!--UNITED STATES MINOR OUTLYING ISLANDS-->
+      </xs:enumeration>
+      <xs:enumeration value="UN">
+        <!--United Nations-->
+      </xs:enumeration>
+      <xs:enumeration value="US">
+        <!--UNITED STATES-->
+      </xs:enumeration>
+      <xs:enumeration value="UY">
+        <!--URUGUAY-->
+      </xs:enumeration>
+      <xs:enumeration value="UZ">
+        <!--UZBEKISTAN-->
+      </xs:enumeration>
+      <xs:enumeration value="VA">
+        <!--HOLY SEE (VATICAN CITY STATE)-->
+      </xs:enumeration>
+      <xs:enumeration value="VC">
+        <!--SAINT VINCENT AND THE GRENADINES-->
+      </xs:enumeration>
+      <xs:enumeration value="VE">
+        <!--VENEZUELA-->
+      </xs:enumeration>
+      <xs:enumeration value="VG">
+        <!--VIRGIN ISLANDS, BRITISH-->
+      </xs:enumeration>
+      <xs:enumeration value="VI">
+        <!--VIRGIN ISLANDS, U.S.-->
+      </xs:enumeration>
+      <xs:enumeration value="VN">
+        <!--VIET NAM-->
+      </xs:enumeration>
+      <xs:enumeration value="VU">
+        <!--VANUATU-->
+      </xs:enumeration>
+      <xs:enumeration value="WF">
+        <!--WALLIS AND FUTUNA-->
+      </xs:enumeration>
+      <xs:enumeration value="WG">
+        <!--GRENADA-->
+      </xs:enumeration>
+      <xs:enumeration value="WL">
+        <!--SAINT LUCIA-->
+      </xs:enumeration>
+      <xs:enumeration value="WO">
+        <!--World Intellectual Property Organization-->
+      </xs:enumeration>
+      <xs:enumeration value="WS">
+        <!--SAMOA-->
+      </xs:enumeration>
+      <xs:enumeration value="WV">
+        <!--Saint Vincent-->
+      </xs:enumeration>
+      <xs:enumeration value="XK">
+        <!--KOSOVO-->
+      </xs:enumeration>
+      <xs:enumeration value="YE">
+        <!--YEMEN-->
+      </xs:enumeration>
+      <xs:enumeration value="YT">
+        <!--MAYOTTE-->
+      </xs:enumeration>
+      <xs:enumeration value="YU">
+        <!--Yugoslavia-->
+      </xs:enumeration>
+      <xs:enumeration value="YV">
+        <!--Venezuela-->
+      </xs:enumeration>
+      <xs:enumeration value="ZA">
+        <!--SOUTH AFRICA-->
+      </xs:enumeration>
+      <xs:enumeration value="ZM">
+        <!--ZAMBIA-->
+      </xs:enumeration>
+      <xs:enumeration value="ZR">
+        <!--Zaire-->
+      </xs:enumeration>
+      <xs:enumeration value="ZW">
+        <!--ZIMBABWE-->
+      </xs:enumeration>
+	<xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="trans_item_status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="A" />
+      <xs:enumeration value="B" />
+      <xs:enumeration value="C" />
+      <xs:enumeration value="D" />
+      <xs:enumeration value="E" />
+      <xs:enumeration value="F" />
+      <xs:enumeration value="G" />
+      <xs:enumeration value="H" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="email_address">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="255" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sql_date">
+    <xs:restriction base="xs:dateTime">
+      <xs:minInclusive value="1753-01-01T00:00:00" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="gender_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="F" />
+      <xs:enumeration value="M" />
+      <xs:enumeration value="O" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="trans_item_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BRS" />
+      <xs:enumeration value="STRA" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="contact_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="BUSN" />
+      <xs:enumeration value="CORS" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="PERM" />
+      <xs:enumeration value="PRVT" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="communication_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="FAX" />
+      <xs:enumeration value="LNPH" />
+      <xs:enumeration value="MOPH" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="PAGR" />
+      <xs:enumeration value="STPH" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="legal_form_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="ASOC" />
+      <xs:enumeration value="CHTY" />
+      <xs:enumeration value="CLUB" />
+      <xs:enumeration value="FNDT" />
+      <xs:enumeration value="GOVT" />
+      <xs:enumeration value="LTDG" />
+      <xs:enumeration value="NGO" />
+      <xs:enumeration value="OFSH" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="PTNR" />
+      <xs:enumeration value="PUBL" />
+      <xs:enumeration value="PVTL" />
+      <xs:enumeration value="SOCT" />
+      <xs:enumeration value="SOLE" />
+      <xs:enumeration value="STAT" />
+      <xs:enumeration value="TRST" />
+      <xs:enumeration value="UNLT" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="entity_person_role_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="BENE" />
+      <xs:enumeration value="BMEM" />
+      <xs:enumeration value="CEO" />
+      <xs:enumeration value="CHPE" />
+      <xs:enumeration value="CSEC" />
+      <xs:enumeration value="DRCT" />
+      <xs:enumeration value="GURN" />
+      <xs:enumeration value="HOIN" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="OWNR" />
+      <xs:enumeration value="PRNR" />
+      <xs:enumeration value="SECT" />
+      <xs:enumeration value="SETL" />
+      <xs:enumeration value="SHLD" />
+      <xs:enumeration value="TRSR" />
+      <xs:enumeration value="TRST" />
+      <xs:enumeration value="UBO" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="account_person_role_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="ACHLD" />
+      <xs:enumeration value="BENEF" />
+      <xs:enumeration value="GUAR" />
+      <xs:enumeration value="LGGUD" />
+      <xs:enumeration value="NOMIN" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="PWRAT" />
+      <xs:enumeration value="REF" />
+      <xs:enumeration value="SUPC" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="party_role_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="-" />
+      <xs:enumeration value="ACHLD" />
+      <xs:enumeration value="BENF" />
+      <xs:enumeration value="NOMIN" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="PRMAC" />
+      <xs:enumeration value="PRSP" />
+      <xs:enumeration value="PWRAT" />
+      <xs:enumeration value="PYEE" />
+      <xs:enumeration value="PYER" />
+      <xs:enumeration value="RELAC" />
+      <xs:enumeration value="RPRY" />
+      <xs:enumeration value="SIGNT" />
+      <xs:enumeration value="VCTM" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="report_indicator_type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A1" />
+      <xs:enumeration value="A2" />
+      <xs:enumeration value="AIF" />
+      <xs:enumeration value="AIFT" />
+      <xs:enumeration value="B1" />
+      <xs:enumeration value="B2" />
+      <xs:enumeration value="B3" />
+      <xs:enumeration value="B4" />
+      <xs:enumeration value="B5" />
+      <xs:enumeration value="B6" />
+      <xs:enumeration value="B7" />
+      <xs:enumeration value="BRS" />
+      <xs:enumeration value="BRSC" />
+      <xs:enumeration value="C1" />
+      <xs:enumeration value="C2" />
+      <xs:enumeration value="C3" />
+      <xs:enumeration value="C4" />
+      <xs:enumeration value="C5" />
+      <xs:enumeration value="C6" />
+      <xs:enumeration value="C7" />
+      <xs:enumeration value="CFIR1" />
+      <xs:enumeration value="CFIR2" />
+      <xs:enumeration value="CFIR3" />
+      <xs:enumeration value="CTR" />
+      <xs:enumeration value="D1" />
+      <xs:enumeration value="E1" />
+      <xs:enumeration value="EFT" />
+      <xs:enumeration value="IFT" />
+      <xs:enumeration value="LKFNS" />
+      <xs:enumeration value="OTH" />
+      <xs:enumeration value="S01" />
+      <xs:enumeration value="S02" />
+      <xs:enumeration value="SB01" />
+      <xs:enumeration value="SB02" />
+      <xs:enumeration value="SB03" />
+      <xs:enumeration value="SB04" />
+      <xs:enumeration value="SB05" />
+      <xs:enumeration value="SB06" />
+      <xs:enumeration value="SB07" />
+      <xs:enumeration value="SB08" />
+      <xs:enumeration value="SB09" />
+      <xs:enumeration value="SB10" />
+      <xs:enumeration value="SB11" />
+      <xs:enumeration value="SB13" />
+      <xs:enumeration value="SB14" />
+      <xs:enumeration value="SB16" />
+      <xs:enumeration value="SB17" />
+      <xs:enumeration value="SB18" />
+      <xs:enumeration value="SB19" />
+      <xs:enumeration value="SB20" />
+      <xs:enumeration value="SB21" />
+      <xs:enumeration value="SB22" />
+      <xs:enumeration value="SB23" />
+      <xs:enumeration value="SB24" />
+      <xs:enumeration value="SB25" />
+      <xs:enumeration value="SB26" />
+      <xs:enumeration value="SB27" />
+      <xs:enumeration value="SB28" />
+      <xs:enumeration value="SB29" />
+      <xs:enumeration value="SB30" />
+      <xs:enumeration value="SB31" />
+      <xs:enumeration value="SB32" />
+      <xs:enumeration value="SB33" />
+      <xs:enumeration value="SB34" />
+      <xs:enumeration value="SB35" />
+      <xs:enumeration value="SB36" />
+      <xs:enumeration value="SB37" />
+      <xs:enumeration value="SB38" />
+      <xs:enumeration value="SB39" />
+      <xs:enumeration value="SB40" />
+      <xs:enumeration value="SB41" />
+      <xs:enumeration value="SB42" />
+      <xs:enumeration value="SB43" />
+      <xs:enumeration value="SB44" />
+      <xs:enumeration value="SB45" />
+      <xs:enumeration value="SB46" />
+      <xs:enumeration value="SB47" />
+      <xs:enumeration value="SB48" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="t_person_registration">
+    <xs:sequence>
+      <xs:element name="ID">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Password">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="20" />
+            <xs:minLength value="5" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="user_code">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="4" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="RE_ID">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10000000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="title" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="prefix">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="1" name="first_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+			<xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+			  <xs:annotation>
+			    <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+			  </xs:annotation>
+			</xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="1" name="last_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="middle_name" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="gender" type="gender_type" />
+      <xs:element minOccurs="0" name="birthdate" type="sql_date" />
+      <xs:element minOccurs="0" name="birth_place">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="mothers_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="alias">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ssn">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="10" />
+            <xs:maxLength value="25" />
+            <xs:pattern value="[0-9]{9}[VX]|[0-9]{12}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">old NIC format 9 [0-9](digits) followed by V or X OR new NIC format 12 [0-9](digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:sequence minOccurs="0">
+        <xs:element name="passport_number">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4" />
+              <xs:maxLength value="255" />
+              <xs:pattern value="^[A-Za-z0-9]{4,}$" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="passport_country" type="country_type" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="id_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+            <xs:pattern value="[A-Za-z0-9]{3,}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="nationality1" type="country_type" />
+      <xs:element minOccurs="0" name="nationality2" type="country_type" />
+      <xs:element minOccurs="0" name="nationality3" type="country_type" />
+      <xs:element minOccurs="0" name="residence" type="country_type" />
+      <xs:element minOccurs="0" maxOccurs="1" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="1" maxOccurs="5" name="email" nillable="true" type="email_address" />
+      <xs:element minOccurs="0" name="occupation">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="employer_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="1" name="identification" type="t_person_identification" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="deceased">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_deceased" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="source_of_wealth">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reject_comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_entity_registration_RE">
+    <xs:sequence>
+      <xs:element name="ID">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="rentity_id">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10000000" />
+            <xs:pattern value="[0-9]{1,3}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"> acceptd values are digits only</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="entity_type_code" type="rentity_type" />
+      <xs:element name="agency_business_type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="5" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="entity_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+            <xs:pattern value="[ -~\t]*">
+              <xs:annotation>
+                <xs:documentation xml:lang="en"> acceptd values are ASCII characters only</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="acronym">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="swift_bic">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="11" />
+            <xs:minLength value="4" />
+            <xs:pattern value="[A-Z]{4}LK[A-Z0-9]{2}([A-Z0-9]{3})?|[0-9]{4}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">SWIFT code format and at minimum 8 chars and maximum 11 OR LankaClear code (4 digits) OR LankaFIN code (4 digits, add prededing zeros to match 4 digits if LankaFIN code is just 2 digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="contact_person">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="name_of_holding_company">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="1000" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="delegate_REID">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10000000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="commercial_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="1000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_legal_form" type="legal_form_type" />
+      <xs:element minOccurs="0" name="incorporation_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="3" />
+<!--             <xs:pattern value="^[A-Z0-9()\-./\\]*[A-Z0-9][A-Z0-9()\-./\\]*$"> -->
+            <xs:pattern value="[ '\\-`,\\/:;,A-Z0-9 ()-.]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are A-Z(uppercase), 0-9, (, ), -, ., /, \. Must have characters are any of A-Z(uppercase), 0-9</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="business">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" fixed="1" name="is_financial">
+        <xs:simpleType>
+          <xs:restriction base="xs:boolean" />
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="1" name="email" type="email_address" />
+      <xs:element minOccurs="0" name="url" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_city">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_country_code" type="country_type" />
+      <xs:element minOccurs="0" name="incorporation_date" type="sql_date" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="business_closed">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_business_closed" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reporting_obligations">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element name="obligation">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1" />
+                  <xs:maxLength value="25" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reject_comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_entity_registration_SH">
+    <xs:sequence>
+      <xs:element name="ID">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="rentity_id">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="1" />
+            <xs:maxInclusive value="10000000" />
+            <xs:pattern value="[0-9]{1,3}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are digits only</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="entity_type_code" type="rentity_type" />
+      <xs:element name="agency_business_type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="5" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="entity_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+            <xs:pattern value="[ -~\t]*">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are ASCII characters only</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="acronym">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="swift_bic">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="11" />
+            <xs:minLength value="4" />
+            <xs:pattern value="[A-Z]{4}LK[A-Z0-9]{2}([A-Z0-9]{3})?|[0-9]{4}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">SWIFT code format and at minimum 8 chars and maximum 11 OR LankaClear code (4 digits) OR LankaFIN code (4 digits, add prededing zeros to match 4 digits if LankaFIN code is just 2 digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="contact_person">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="name_of_holding_company">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="1000" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="delegate_REID">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10000000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="commercial_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="1000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_legal_form" type="legal_form_type" />
+      <xs:element minOccurs="0" name="incorporation_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="3" />
+<!--             <xs:pattern value="^[A-Z0-9()\-./\\]*[A-Z0-9][A-Z0-9()\-./\\]*$"> -->
+            <xs:pattern value="[ '\\-`,\\/:;,A-Z0-9 ()-.]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are A-Z(uppercase), 0-9, (, ), -, ., /, \. Must have characters are any of A-Z(uppercase), 0-9</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="business">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" fixed="1" name="is_financial">
+        <xs:simpleType>
+          <xs:restriction base="xs:boolean" />
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="1" name="email" type="email_address" />
+      <xs:element minOccurs="0" name="url" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_city">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_country_code" type="country_type" />
+      <xs:element minOccurs="0" name="incorporation_date" type="sql_date" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="business_closed">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_business_closed" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reporting_obligations">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element name="obligation">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1" />
+                  <xs:maxLength value="25" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reject_comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_entity_registration_SUP">
+    <xs:sequence>
+      <xs:element name="ID">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="rentity_id">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="1" />
+            <xs:maxInclusive value="10000000" />
+            <xs:pattern value="[0-9]{1,3}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are digits only</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="entity_type_code" type="rentity_type" />
+      <xs:element name="agency_business_type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="5" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="entity_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+            <xs:pattern value="[ -~\t]*">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are ASCII characters only</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="acronym">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="swift_bic">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="11" />
+            <xs:minLength value="4" />
+            <xs:pattern value="[A-Z]{4}LK[A-Z0-9]{2}([A-Z0-9]{3})?|[0-9]{4}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">SWIFT code format and at minimum 8 chars and maximum 11 OR LankaClear code (4 digits) OR LankaFIN code (4 digits, add prededing zeros to match 4 digits if LankaFIN code is just 2 digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="contact_person">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="name_of_holding_company">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="1000" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="delegate_REID">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10000000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="commercial_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="1000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_legal_form" type="legal_form_type" />
+      <xs:element minOccurs="0" name="incorporation_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="50" />
+            <xs:minLength value="3" />
+<!--             <xs:pattern value="^[A-Z0-9()\-./\\]*[A-Z0-9][A-Z0-9()\-./\\]*$"> -->
+            <xs:pattern value="[ '\\-`,\\/:;,A-Z0-9 ()-.]+">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are A-Z(uppercase), 0-9, (, ), -, ., /, \. Must have characters are any of A-Z(uppercase), 0-9</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="business">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" fixed="1" name="is_financial">
+        <xs:simpleType>
+          <xs:restriction base="xs:boolean" />
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="1" name="email" type="email_address" />
+      <xs:element minOccurs="0" name="url" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_city">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_state">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="incorporation_country_code" type="country_type" />
+      <xs:element minOccurs="0" name="incorporation_date" type="sql_date" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="business_closed">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_business_closed" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reporting_obligations">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element name="obligation">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1" />
+                  <xs:maxLength value="25" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="reject_comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="t_person_registration_in_report">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="gender" type="gender_type" />
+      <xs:element minOccurs="0" name="title" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="30" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="first_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+			<xs:pattern value="([A-Za-z]+( [A-Za-z]+)+)|([A-Za-z]+)">
+			  <xs:annotation>
+			    <xs:documentation xml:lang="en">accepted characters are any of  (space), A-Z(uppercase), a-z(lowercase), (apostrophe), -. Must have characters are any of A-Z(uppercase), a-z(lowercase)</xs:documentation>
+			  </xs:annotation>
+			</xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="middle_name" nillable="true">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="prefix">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="last_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+            <xs:minLength value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="birthdate" type="sql_date" />
+      <xs:element minOccurs="0" name="birth_place">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="mothers_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="alias">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="ssn">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="10" />
+            <xs:maxLength value="25" />
+            <xs:pattern value="[0-9]{9}[VX]|[0-9]{12}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">old NIC format 9 [0-9](digits) followed by V or X OR new NIC format 12 [0-9](digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" name="passport_number">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="4" />
+              <xs:maxLength value="255" />
+              <xs:pattern value="^[A-Za-z0-9]{4,}$" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="passport_country" type="country_type" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="id_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="3" />
+            <xs:maxLength value="255" />
+            <xs:pattern value="[A-Za-z0-9]{3,}">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">accepted characters are any of A-Z(uppercase), a-z(lowercase), 0-9(digits)</xs:documentation>
+              </xs:annotation>
+            </xs:pattern>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="nationality1" type="country_type" />
+      <xs:element minOccurs="0" name="nationality2" type="country_type" />
+      <xs:element minOccurs="0" name="nationality3" type="country_type" />
+      <xs:element minOccurs="0" name="residence" type="country_type" />
+      <xs:element minOccurs="0" name="phones">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="phone" type="t_phone" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="addresses">
+        <xs:complexType>
+          <xs:sequence maxOccurs="unbounded">
+            <xs:element minOccurs="0" name="address" type="t_address" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" maxOccurs="5" name="email" nillable="true" type="email_address" />
+      <xs:element minOccurs="0" name="occupation">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+            <xs:minLength value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="employer_name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="employer_address_id" type="t_address" />
+      <xs:element minOccurs="0" name="employer_phone_id" type="t_phone" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="identification" type="t_person_identification" />
+      <xs:sequence minOccurs="0">
+        <xs:element minOccurs="0" fixed="1" name="deceased">
+          <xs:simpleType>
+            <xs:restriction base="xs:boolean" />
+          </xs:simpleType>
+        </xs:element>
+        <xs:element minOccurs="0" name="date_deceased" type="sql_date" />
+      </xs:sequence>
+      <xs:element minOccurs="0" name="tax_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="tax_reg_number">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="100" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="source_of_wealth">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="255" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element minOccurs="0" name="comments">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="0" />
+            <xs:maxLength value="4000" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
