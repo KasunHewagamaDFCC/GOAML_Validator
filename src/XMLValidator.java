@@ -14,7 +14,7 @@ public class XMLValidator {
         try {
             // Load the XSD schema
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = factory.newSchema(new File("C:\\Users\\kasunhe\\IdeaProjects\\Test_2\\src\\goAMLSchema-Version_2.0.xsd"));
+            Schema schema = factory.newSchema(new File("C:\\Users\\kasunhe\\Downloads\\Test_2\\src\\goAMLSchema-Version_2.0.xsd"));
 
             // Create a validator
             Validator validator = schema.newValidator();
@@ -24,7 +24,7 @@ public class XMLValidator {
             validator.setErrorHandler(errorHandler);
 
             // Validate an XML file
-            validator.validate(new StreamSource(new File("C:\\Users\\kasunhe\\IdeaProjects\\Test_2\\INPUT\\Oct_30_2023\\eftransaction-775-Oct_30_2023_4.xml")));
+            validator.validate(new StreamSource(new File("C:\\Users\\kasunhe\\IdeaProjects\\Test_2\\INPUT\\CTR  08 JAN 2024.xml")));
 
             if (errorHandler.hasErrors()) {
                 System.out.println("XML is not valid. Validation errors:");
