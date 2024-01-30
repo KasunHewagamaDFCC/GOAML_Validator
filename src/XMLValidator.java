@@ -24,7 +24,7 @@ public class XMLValidator {
             validator.setErrorHandler(errorHandler);
 
             // Validate an XML file
-            validator.validate(new StreamSource(new File("C:\\Users\\kasunhe\\IdeaProjects\\Test_2\\INPUT\\CTR  08 JAN 2024.xml")));
+            validator.validate(new StreamSource(new File("C:\\Users\\kasunhe\\IdeaProjects\\Test_2\\INPUT\\Pawning.xml")));
 
             if (errorHandler.hasErrors()) {
                 System.out.println("XML is not valid. Validation errors:");
