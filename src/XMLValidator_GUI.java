@@ -18,6 +18,7 @@ public class XMLValidator_GUI extends JFrame implements ActionListener {
     private JTextField xsdField, xmlField;
     private JButton xsdBrowseButton, xmlBrowseButton, validateButton;
     private JTextArea resultArea;
+    private JPanel bottomPanel;
     private JLabel nameLabel;
 
     public XMLValidator_GUI() {
@@ -64,14 +65,19 @@ public class XMLValidator_GUI extends JFrame implements ActionListener {
         resultArea.setEditable(false);
         add(new JScrollPane(resultArea), BorderLayout.CENTER);
 
-        JPanel bottomPanel = new JPanel(new BorderLayout());
-        ImageIcon imageIcon = new ImageIcon("C:\\Users\\kasunhe\\Documents\\logo.jpg"); // Change to your image path
+        bottomPanel = new JPanel(new BorderLayout());
+
+        // Load the image from a file or replace it with your own path
+        ImageIcon imageIcon = new ImageIcon("C:\\Users\\kasunhe\\Documents\\logo.jpg");
+        Image image = imageIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(image);
+
         JLabel imageLabel = new JLabel(imageIcon);
         bottomPanel.add(imageLabel, BorderLayout.WEST);
 
         nameLabel = new JLabel("Powered By DWBI");
         nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        nameLabel.setFont(new Font("Corbel Light", Font.PLAIN, 12));
+        nameLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         bottomPanel.add(nameLabel, BorderLayout.CENTER);
 
         add(bottomPanel, BorderLayout.SOUTH);
