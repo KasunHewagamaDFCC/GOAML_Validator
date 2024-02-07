@@ -1,0 +1,1 @@
+Main-Class: XMLValidatorGUI_Name

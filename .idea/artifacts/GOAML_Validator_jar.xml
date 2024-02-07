@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GOAML_Validator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GOAML_Validator_jar</output-path>
+    <root id="archive" name="GOAML_Validator.jar">
+      <element id="module-output" name="GOAML_Validator" />
+    </root>
+  </artifact>
+</component>
