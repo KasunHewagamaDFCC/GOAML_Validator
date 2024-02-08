@@ -26,6 +26,10 @@ public class XMLValidatorGUI_Name extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        // Set the icon image
+        ImageIcon icon = new ImageIcon("Logo/ICON.png");
+        setIconImage(icon.getImage());
+
         JPanel inputPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -82,7 +86,7 @@ public class XMLValidatorGUI_Name extends JFrame implements ActionListener {
 
         nameLabel = new JLabel("Powered By DWBI ");
         nameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        nameLabel.setFont(new Font("Corbel Light", Font.BOLD, 12));
+        nameLabel.setFont(new Font("Corbel Light", Font.PLAIN, 12));
         bottomPanel.add(nameLabel, BorderLayout.CENTER);
 
         add(bottomPanel, BorderLayout.SOUTH);
