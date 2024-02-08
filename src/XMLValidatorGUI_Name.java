@@ -21,13 +21,13 @@ public class XMLValidatorGUI_Name extends JFrame implements ActionListener {
     private JLabel nameLabel;
 
     public XMLValidatorGUI_Name() {
-        setTitle("XML Validator");
+        setTitle("GOAML XML Validator - DFCC Ver. 1");
         setSize(1000, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         // Set the icon image
-        ImageIcon icon = new ImageIcon("Logo/ICON.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("icons/ICON.png"));
         setIconImage(icon.getImage());
 
         JPanel inputPanel = new JPanel(new GridBagLayout());
@@ -37,7 +37,7 @@ public class XMLValidatorGUI_Name extends JFrame implements ActionListener {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         xsdField = new JTextField(30);
-        xsdBrowseButton = new RoundedButton("Browse");
+        xsdBrowseButton = new RoundedButton("Browse Schema");
         xsdBrowseButton.addActionListener(this);
         inputPanel.add(new JLabel("XSD File Path:"), gbc);
         gbc.gridx++;
@@ -48,7 +48,7 @@ public class XMLValidatorGUI_Name extends JFrame implements ActionListener {
         gbc.gridx = 0;
         gbc.gridy++;
         xmlField = new JTextField(30);
-        xmlBrowseButton = new RoundedButton("Browse");
+        xmlBrowseButton = new RoundedButton("Browse XML");
         xmlBrowseButton.addActionListener(this);
         inputPanel.add(new JLabel("XML File Path:"), gbc);
         gbc.gridx++;
@@ -72,7 +72,7 @@ public class XMLValidatorGUI_Name extends JFrame implements ActionListener {
 
         JPanel bottomPanel = new JPanel(new BorderLayout());
         try {
-            ImageIcon imageIcon = new ImageIcon("Logo/logo_new.png");
+            ImageIcon imageIcon = new ImageIcon(getClass().getResource("icons/logo_new.png"));
             Image originalImage = imageIcon.getImage();
             int newWidth = 80;
             int newHeight = -1;
